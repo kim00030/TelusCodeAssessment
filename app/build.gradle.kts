@@ -64,6 +64,9 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
 
+    //Splash Api
+    implementation(libs.androidx.core.splashscreen)
+
     // Coil
     implementation(libs.coil.compose)
     //Icons
