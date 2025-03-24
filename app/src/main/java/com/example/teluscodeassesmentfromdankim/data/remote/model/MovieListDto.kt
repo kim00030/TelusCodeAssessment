@@ -1,17 +1,15 @@
 package com.example.teluscodeassesmentfromdankim.data.remote.model
 
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import com.google.gson.annotations.SerializedName
 
-@Serializable
 data class MovieListDto(
-    @SerialName("page")
+    @SerializedName("page")
     val page: Int,
-    @SerialName("results")
+    @SerializedName("results")
     val results: List<MovieDto>,
-    @SerialName("total_pages")
+    @SerializedName("total_pages")
     val totalPages: Int,
-    @SerialName("total_results")
+    @SerializedName("total_results")
     val totalResults: Int
 )

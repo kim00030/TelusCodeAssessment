@@ -34,6 +34,8 @@ class HomeViewModel @Inject constructor(
             MovieListUiEvent.LoadMovieList -> {
                 getMovieList(true)
             }
+
+            MovieListUiEvent.Paginate -> getMovieList(true)
         }
     }
 
