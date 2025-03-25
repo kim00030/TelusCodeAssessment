@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Telus Code assesment From Dan Kim</string>
+    <string name="movie_overview">Movie overview</string>
+    <string name="overview">" overView"</string>
+    <string name="back">back</string>
 </resources>

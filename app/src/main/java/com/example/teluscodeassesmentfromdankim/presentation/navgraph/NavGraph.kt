@@ -7,7 +7,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.toRoute
 import com.example.teluscodeassesmentfromdankim.presentation.details.DetailScreen
 import com.example.teluscodeassesmentfromdankim.presentation.details.DetailsViewModel
 import com.example.teluscodeassesmentfromdankim.presentation.home.HomeScreen
@@ -15,8 +14,8 @@ import com.example.teluscodeassesmentfromdankim.presentation.home.HomeViewModel
 
 /**
  * Author: Dan Kim
+ * Navigation graph for the app
  */
-
 @Composable
 fun NavGraph() {
 
@@ -35,21 +34,18 @@ fun NavGraph() {
             val homeViewModel = hiltViewModel<HomeViewModel>()
             HomeScreen(
                 state = homeViewModel.state,
-                onNavigateToDetails = { movieId->
+                onNavigateToDetails = { movieId ->
                     navController.navigate(ScreenRoute.Details(id = movieId))
                 },
                 onEvent = homeViewModel::onEvent
             )
         }
-        composable<ScreenRoute.Details> { navBackStackEntry ->
-
-            val detailScreen: ScreenRoute.Details = navBackStackEntry.toRoute()
+        composable<ScreenRoute.Details> {
 
             val detailsViewModel = hiltViewModel<DetailsViewModel>()
-            val seeMe = detailsViewModel.movieId
-            println("seeMe: $seeMe")
 
             DetailScreen(
+                state = detailsViewModel.state,
                 onNavigateToHome = {
                     navController.popBackStack()
                 }

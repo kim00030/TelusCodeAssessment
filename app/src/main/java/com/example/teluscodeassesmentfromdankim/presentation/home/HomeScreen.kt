@@ -10,7 +10,11 @@ import com.example.teluscodeassesmentfromdankim.presentation.common.LoadingIndic
 import com.example.teluscodeassesmentfromdankim.presentation.common.MovieCard
 
 /**
- * Author: Dan Kim
+ * Author: Dan
+ *
+ * @param state State of the screen.
+ * @param onNavigateToDetails Callback to navigate to the details screen.
+ * @param onEvent Callback to handle UI events.
  */
 @Composable
 fun HomeScreen(
@@ -39,6 +43,8 @@ fun HomeScreen(
                             onNavigateToDetails(state.movieList[index].id)
                         }
                     )
+                    // Trigger pagination when the user scrolls to the last visible item
+                    // and a new page is not currently being loaded
                     if (index >= state.movieList.size - 1 && !state.isLoading) {
                         onEvent(MovieListUiEvent.Paginate)
                     }
