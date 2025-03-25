@@ -33,6 +33,9 @@ class DetailsViewModel @Inject constructor(
         getMovieDetails()
     }
 
+    /**
+     * Fetches a movie detail by its ID from local DB
+     */
     private fun getMovieDetails() {
         viewModelScope.launch {
             state = state.copy(isLoading = true)
