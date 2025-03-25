@@ -37,7 +37,6 @@ import com.example.teluscodeassesmentfromdankim.ui.theme.TelusCodeAssesmentFromD
 /**
  * Author: Dan Kim
  */
-
 @Composable
 fun MovieCard(
     modifier: Modifier = Modifier,
@@ -123,20 +122,12 @@ fun MovieCardPreview() {
     TelusCodeAssesmentFromDanKimTheme {
 
         val movie = Movie(
-            adult = true,
             backdropPath = "/mDfJG3LC3Dqb67AZ52x3Z0jU0uB.jpg",
-            genreIds = listOf(1, 2, 3),
             id = 1,
-            originalLanguage = "en",
             originalTitle = "Movie Title",
             overview = "As the Avengers and their allies have continued to protect the world from threats too large for any one hero to handle, a new danger has emerged from the cosmic shadows: Thanos. A despot of intergalactic infamy, his goal is to collect all six Infinity Stones, artifacts of unimaginable power, and use them to inflict his twisted will on all of reality. Everything the Avengers have fought for has led up to this moment - the fate of Earth and existence itself has never been more uncertain.",
-            popularity = 1.0,
             posterPath = "/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg",
-            releaseDate = "2023-01-01",
             title = "Avengers: Infinity War",
-            video = true,
-            voteAverage = 1.0,
-            voteCount = 1
         )
         Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
             MovieCard(
