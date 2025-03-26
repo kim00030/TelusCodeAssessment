@@ -69,3 +69,14 @@ fun MovieEntity.toMovie(): Movie {
         //voteCount = this.voteCount
     )
 }
+
+fun MovieDto.toMovie(): Movie {
+    return Movie(
+        backdropPath = this.backdropPath ?: "",
+        id = this.id ?: -1,
+        originalTitle = this.originalTitle ?: "",
+        overview = this.overview ?: "",
+        posterPath = this.posterPath ?: "",
+        title = this.title ?: ""
+    )
+}

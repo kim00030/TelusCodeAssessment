@@ -3,6 +3,7 @@ package com.example.teluscodeassesmentfromdankim.presentation.navgraph
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -11,6 +12,8 @@ import com.example.teluscodeassesmentfromdankim.presentation.details.DetailScree
 import com.example.teluscodeassesmentfromdankim.presentation.details.DetailsViewModel
 import com.example.teluscodeassesmentfromdankim.presentation.home.HomeScreen
 import com.example.teluscodeassesmentfromdankim.presentation.home.HomeViewModel
+import com.example.teluscodeassesmentfromdankim.presentation.similarmovie.SimilarMoviesUiEvent
+import com.example.teluscodeassesmentfromdankim.presentation.similarmovie.SimilarMoviesViewModel
 
 /**
  * Author: Dan Kim
@@ -43,9 +46,19 @@ fun NavGraph() {
         composable<ScreenRoute.Details> {
 
             val detailsViewModel = hiltViewModel<DetailsViewModel>()
+            val similarMoviesViewModel = hiltViewModel<SimilarMoviesViewModel>()
+
+            val movie = detailsViewModel.state.movie
+            LaunchedEffect(key1 = movie?.id) {
+                movie?.run {
+                    println("myDebug: LaunchedEffect")
+                    similarMoviesViewModel.onEvent(event = SimilarMoviesUiEvent.FetchMovieId(movieId = id))
+                }
+            }
 
             DetailScreen(
                 state = detailsViewModel.state,
+                similarMoviesState = similarMoviesViewModel.state,
                 onNavigateToHome = {
                     navController.popBackStack()
                 }

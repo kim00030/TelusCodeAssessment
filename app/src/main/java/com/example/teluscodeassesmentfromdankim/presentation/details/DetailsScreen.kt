@@ -1,30 +1,34 @@
 package com.example.teluscodeassesmentfromdankim.presentation.details
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -32,11 +36,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
 import com.example.teluscodeassesmentfromdankim.R
 import com.example.teluscodeassesmentfromdankim.data.remote.ApiConstants
+import com.example.teluscodeassesmentfromdankim.domain.model.Movie
+import com.example.teluscodeassesmentfromdankim.presentation.common.CustomAsyncImage
 import com.example.teluscodeassesmentfromdankim.presentation.common.LoadingIndicator
+import com.example.teluscodeassesmentfromdankim.presentation.common.NavigateBack
+import com.example.teluscodeassesmentfromdankim.presentation.home.MovieListState
+import com.example.teluscodeassesmentfromdankim.presentation.similarmovie.SimilarMoviesDialog
 
 /**
  * Author: Dan Kim
@@ -49,29 +56,21 @@ import com.example.teluscodeassesmentfromdankim.presentation.common.LoadingIndic
 @Composable
 fun DetailScreen(
     state: DetailsState,
+    similarMoviesState: MovieListState,
     onNavigateToHome: () -> Unit
 ) {
-
     if (state.movie == null) {
         LoadingIndicator()
     } else {
+
+        var selectedMovie by rememberSaveable { mutableStateOf<Movie?>(null) }
 
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
         ) {
-            IconButton(
-                modifier = Modifier.padding(start = 8.dp, top = 24.dp, bottom = 32.dp),
-                onClick = onNavigateToHome,
-            ) {
-                Icon(
-                    modifier = Modifier.size(32.dp),
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = stringResource(R.string.back),
-                    tint = colorResource(R.color.text_title)
-                )
-            }
+            NavigateBack(onNavigateBack = onNavigateToHome)
 
             val scrollState = rememberScrollState()
             Column(
@@ -85,30 +84,28 @@ fun DetailScreen(
             ) {
 
                 Text(
-                    modifier = Modifier.align(alignment = Alignment.CenterHorizontally).padding(top = 12.dp),
+                    modifier = Modifier
+                        .align(alignment = Alignment.CenterHorizontally)
+                        .padding(top = 12.dp),
                     text = state.movie.title,
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
                     color = colorResource(R.color.text_title),
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
-
                 )
 
                 Spacer(modifier = Modifier.height(30.dp))
 
-                AsyncImage(
-                    model = ImageRequest
-                        .Builder(LocalContext.current)
-                        .data(ApiConstants.IMAGE_BASE_URL + state.movie.posterPath)
-                        .build(),
-                    contentDescription = state.movie.title + stringResource(R.string.overview),
-                    placeholder = painterResource(R.drawable.ic_image_place_holder),
-                    error = painterResource(R.drawable.ic_image_place_holder),
+                CustomAsyncImage(
                     modifier = Modifier
                         .width(120.dp)
                         .height(200.dp)
                         .clip(MaterialTheme.shapes.small),
+                    data = ApiConstants.IMAGE_BASE_URL + state.movie.posterPath,
+                    contentDescription = state.movie.title + stringResource(R.string.overview),
+                    placeholder = painterResource(R.drawable.ic_image_place_holder),
+                    error = painterResource(R.drawable.ic_image_place_holder),
                     contentScale = ContentScale.Crop
                 )
                 Spacer(modifier = Modifier.height(30.dp))
@@ -123,6 +120,63 @@ fun DetailScreen(
                     style = MaterialTheme.typography.bodyMedium,
                     color = colorResource(R.color.body),
                     modifier = Modifier.align(Alignment.Start)
+                )
+                //From this point, Similar movies
+                Spacer(modifier = Modifier.height(24.dp))
+
+                // LazyRow for similar movies
+                if (similarMoviesState.movieList.isNotEmpty()) {
+
+                    Text(
+                        text = "Similar Movies",
+                        style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+                        color = colorResource(R.color.text_title),
+                        modifier = Modifier.align(Alignment.Start)
+                    )
+
+                    LazyRow(
+                        contentPadding = PaddingValues(vertical = 16.dp),
+                        horizontalArrangement = Arrangement.spacedBy(16.dp)
+                    ) {
+
+                        items(similarMoviesState.movieList) { movie ->
+                            Column(
+                                modifier = Modifier
+                                    .width(120.dp)
+                                    .clickable {
+                                        selectedMovie = movie
+                                    }
+                            ) {
+
+                                CustomAsyncImage(
+                                    modifier = Modifier
+                                        .height(180.dp)
+                                        .fillMaxWidth()
+                                        .clip(MaterialTheme.shapes.small),
+                                    data = ApiConstants.IMAGE_BASE_URL + movie.backdropPath,
+                                    contentDescription = movie.title,
+                                    placeholder = painterResource(R.drawable.ic_image_place_holder),
+                                    error = painterResource(R.drawable.ic_image_place_holder),
+                                    contentScale = ContentScale.Crop
+                                )
+                                Spacer(modifier = Modifier.height(8.dp))
+                                Text(
+                                    text = movie.title,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = colorResource(R.color.text_title),
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+
+            selectedMovie?.let { movie ->
+                SimilarMoviesDialog(
+                    movie = movie,
+                    onDismiss = { selectedMovie = null }
                 )
             }
         }

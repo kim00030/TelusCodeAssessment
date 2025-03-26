@@ -24,7 +24,6 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
@@ -83,16 +82,13 @@ fun MovieCard(
                 }
 
                 is AsyncImagePainter.State.Success -> {
-                    AsyncImage(
+                    CustomAsyncImage(
                         modifier = Modifier
                             .width(150.dp)
                             .height(100.dp)
                             .padding(8.dp)
                             .clip(MaterialTheme.shapes.medium),
-                        model = ImageRequest
-                            .Builder(LocalContext.current)
-                            .data(ApiConstants.IMAGE_BASE_URL + movie.backdropPath)
-                            .build(),
+                        data = ApiConstants.IMAGE_BASE_URL + movie.backdropPath,
                         contentDescription = movie.title,
                         contentScale = ContentScale.Crop
                     )
