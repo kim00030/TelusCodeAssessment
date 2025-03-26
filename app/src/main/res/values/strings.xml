@@ -3,4 +3,5 @@
     <string name="movie_overview">Movie overview</string>
     <string name="overview">" overView"</string>
     <string name="back">back</string>
+    <string name="similar_movies">Similar Movies</string>
 </resources>

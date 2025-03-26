@@ -3,6 +3,15 @@ package com.example.teluscodeassesmentfromdankim.data.remote.model
 
 import com.google.gson.annotations.SerializedName
 
+/**
+ * Data Transfer Object (DTO) representing a movie item received from TMDB API responses
+ * (e.g., `discover/movie`, `movie/{movie_id}/similar`, etc.).
+ *
+ * All fields are nullable to safely handle missing data from the API.
+ *
+ * This class is mapped from the JSON response using Gson and used before conversion
+ * to domain or database models (e.g., [Movie], [MovieEntity]).
+ */
 data class MovieDto(
 
     val adult: Boolean?,

@@ -15,6 +15,7 @@ import com.example.teluscodeassesmentfromdankim.R
 
 /**
  * Author: Dan Kim
+ * re-usable composable for navigating back to the previous screen.
  */
 @Composable
 fun NavigateBack(

@@ -48,10 +48,11 @@ fun NavGraph() {
             val detailsViewModel = hiltViewModel<DetailsViewModel>()
             val similarMoviesViewModel = hiltViewModel<SimilarMoviesViewModel>()
 
+            // Retrieve the movie from DetailsViewModel's state
             val movie = detailsViewModel.state.movie
             LaunchedEffect(key1 = movie?.id) {
+                // Trigger fetching of similar movies for the current movie ID
                 movie?.run {
-                    println("myDebug: LaunchedEffect")
                     similarMoviesViewModel.onEvent(event = SimilarMoviesUiEvent.FetchMovieId(movieId = id))
                 }
             }

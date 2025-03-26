@@ -11,11 +11,24 @@ import javax.inject.Inject
 
 /**
  * Author: Dan Kim
+ *
+ * Implementation of [SimilarMoviesRepository] that fetches similar movies
+ * from the TMDB API and emits results as a Flow of [Resource].
+ *
+ * This class does not interact with any local database. It is designed for
+ * stateless, on-demand API calls for similar movie suggestions.
  */
 class SimilarMoviesRepositoryImpl @Inject constructor(
     private val movieApi: MovieApi
 ) : SimilarMoviesRepository {
 
+    /**
+     * Retrieves a list of movies similar to the given [movieId] from the TMDB API.
+     * Emits loading state, then success or error as a [Resource] wrapper.
+     *
+     * @param movieId The ID of the movie to find similar recommendations for.
+     * @return A [Flow] emitting [Resource.Loading], [Resource.Success], or [Resource.Error].
+     */
     override fun getSimilarMovies(movieId: Int): Flow<Resource<List<Movie>>> {
         return flow {
             emit(Resource.Loading(true))

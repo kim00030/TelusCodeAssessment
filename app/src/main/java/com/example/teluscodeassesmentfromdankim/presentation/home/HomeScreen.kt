@@ -10,7 +10,7 @@ import com.example.teluscodeassesmentfromdankim.presentation.common.LoadingIndic
 import com.example.teluscodeassesmentfromdankim.presentation.common.MovieCard
 
 /**
- * Author: Dan
+ * Author: Dan Kim
  *
  * @param state State of the screen.
  * @param onNavigateToDetails Callback to navigate to the details screen.

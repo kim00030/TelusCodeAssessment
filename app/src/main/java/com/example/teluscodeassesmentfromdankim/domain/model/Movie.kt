@@ -2,6 +2,15 @@ package com.example.teluscodeassesmentfromdankim.domain.model
 
 import com.google.gson.annotations.SerializedName
 
+/**
+ * Author: Dan Kim
+ *
+ * Represents a simplified Movie model used in the presentation layer.
+ * This class is designed to hold only the essential data required by the UI.
+ *
+ * Many fields from the full TMDB API response (e.g., `adult`, `genreIds`, `voteAverage`) are intentionally
+ * excluded or commented out to keep the UI model lightweight. They can be re-enabled later if needed.
+ */
 data class Movie(
 //    val adult: Boolean,
 //    @SerializedName("backdrop_path")

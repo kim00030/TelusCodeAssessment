@@ -35,6 +35,7 @@ import com.example.teluscodeassesmentfromdankim.ui.theme.TelusCodeAssesmentFromD
 
 /**
  * Author: Dan Kim
+ * Movie item composable showing in Home Screen
  */
 @Composable
 fun MovieCard(

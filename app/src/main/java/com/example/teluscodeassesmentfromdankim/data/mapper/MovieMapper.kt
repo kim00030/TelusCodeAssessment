@@ -70,6 +70,9 @@ fun MovieEntity.toMovie(): Movie {
     )
 }
 
+/**
+ * Maps a [MovieDto] (from local Room DB) to a domain [Movie] model.
+ */
 fun MovieDto.toMovie(): Movie {
     return Movie(
         backdropPath = this.backdropPath ?: "",

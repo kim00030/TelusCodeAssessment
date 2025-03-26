@@ -2,7 +2,6 @@ package com.example.teluscodeassesmentfromdankim.di
 
 import android.app.Application
 import androidx.room.Room
-import androidx.room.RoomDatabase
 import com.example.teluscodeassesmentfromdankim.data.local.moviedb.MovieDatabase
 import com.example.teluscodeassesmentfromdankim.data.remote.ApiConstants
 import com.example.teluscodeassesmentfromdankim.data.remote.MovieApi
@@ -16,14 +15,21 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
+/**
+ * Author: Dan Kim
+ *
+ * Provides application-wide dependencies using Dagger-Hilt.
+ * This module sets up Retrofit for networking and Room for local database storage.
+ */
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
+    // Logging interceptor to log full request/response bodies for debugging
     private val interceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
     }
-
+    // OkHttp client with logging interceptor added
     private val client: OkHttpClient = OkHttpClient.Builder()
         .addInterceptor(interceptor)
         .build()

@@ -3,7 +3,12 @@ package com.example.teluscodeassesmentfromdankim.data.local.moviedb
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.serialization.SerialName
-
+/**
+ * Author: Dan Kim
+ *
+ * Represents a movie entity stored in the local Room database.
+ * This model is used for caching and offline access.
+ **/
 @Entity
 data class MovieEntity(
     val adult: Boolean,
