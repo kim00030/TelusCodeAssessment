@@ -91,7 +91,7 @@ fun DetailScreen(
                         .width(120.dp)
                         .height(200.dp)
                         .clip(MaterialTheme.shapes.small),
-                    data = ApiConstants.IMAGE_BASE_URL + state.movie.posterPath,
+                    data = ApiConstants.IMAGE_BASE_URL + state.movie.backdropPath,
                     contentDescription = state.movie.title + stringResource(R.string.overview),
                     placeholder = painterResource(R.drawable.ic_image_place_holder),
                     error = painterResource(R.drawable.ic_image_place_holder),

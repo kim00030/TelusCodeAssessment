@@ -93,7 +93,7 @@ fun SimilarMoviesDialog(
                         .width(140.dp)
                         .height(220.dp)
                         .clip(MaterialTheme.shapes.medium),
-                    data = ApiConstants.IMAGE_BASE_URL + movie.backdropPath,
+                    data = ApiConstants.IMAGE_BASE_URL + movie.posterPath,
                     contentDescription = movie.title,
                     placeholder = painterResource(R.drawable.ic_image_place_holder),
                     error = painterResource(R.drawable.ic_image_place_holder),
