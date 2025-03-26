@@ -10,6 +10,7 @@ import coil.request.ImageRequest
 
 /**
  * Author: Dan Kim
+ * A reusable wrapper around [AsyncImage] (from Coil) to simplify image loading in the UI.
  */
 @Composable
 fun CustomAsyncImage(
