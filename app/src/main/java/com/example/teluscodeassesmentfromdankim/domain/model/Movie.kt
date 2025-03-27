@@ -1,6 +1,8 @@
 package com.example.teluscodeassesmentfromdankim.domain.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 /**
  * Author: Dan Kim
@@ -11,6 +13,7 @@ import com.google.gson.annotations.SerializedName
  * Many fields from the full TMDB API response (e.g., `adult`, `genreIds`, `voteAverage`) are intentionally
  * excluded or commented out to keep the UI model lightweight. They can be re-enabled later if needed.
  */
+@Parcelize
 data class Movie(
 //    val adult: Boolean,
 //    @SerializedName("backdrop_path")
@@ -34,4 +37,4 @@ data class Movie(
 //    val voteAverage: Double,
 //    @SerializedName("vote_count")
 //    val voteCount: Int
-)
+): Parcelable
